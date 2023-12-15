@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from "react";
-import { Switch, Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 
-const Home = lazy(() => import("../pages/App"));
+const Home = lazy(() => import("../pages/Home"));
 const Redirect = lazy(() => import("../pages/Redirect"));
 
 const Routese = () => {

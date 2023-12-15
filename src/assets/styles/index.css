@@ -3,9 +3,6 @@
 body {
   margin: 0;
   font-family: "Rubik", sans-serif;
-  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -129,7 +126,12 @@ input {
 .container {
   height: 50vh;
   overflow-y: scroll;
+}
+
+.search{
   margin-top: 20px;
+  width: 830px;
+  border-bottom: 1px solid #4f4f4f;
 }
 
 ::-webkit-scrollbar {
@@ -139,7 +141,6 @@ input {
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
   background-color: rgba(0, 0, 0, 0.5);
-  /* box-shadow: 0 0 1px rgba(255, 255, 255, .5); */
 }
 
 .top-border {

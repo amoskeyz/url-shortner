@@ -18,7 +18,7 @@ const Redirect = () => {
         ? window.location.assign(getOriginalLink.originalUrl)
         : setError(true);
     } else setError(true);
-  }, []);
+  }, [location.pathname]);
 
   return (
     <div>

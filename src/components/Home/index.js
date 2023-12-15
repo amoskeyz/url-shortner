@@ -1,37 +1,39 @@
 import { useState, useEffect } from "react";
-import Icon from "../assets/images/icon.svg";
-import linkIcon from "../assets/images/linkIcon.svg";
-import copy from "../assets/images/copy.svg";
-import { generateLink, deleteLink, editLink } from "../utils";
+import linkIcon from "../../assets/images/linkIcon.svg";
+import copy from "../../assets/images/copy.svg";
+import { generateLink, deleteLink, editLink } from "../../utils";
 import InsertLinkIcon from "@mui/icons-material/InsertLink";
 import toast from "react-hot-toast";
-import deleteIcon from "../assets/images/delete.svg";
-import editIcon from "../assets/images/edit.svg";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import deleteIcon from "../../assets/images/delete.svg";
+import editIcon from "../../assets/images/edit.svg";
 
 function App() {
   const [value, setValue] = useState({ url: "", id: "" });
-  const [loading, setLoading] = useState(false);
   const [refetch, setrefetch] = useState(false);
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState();
 
+  //Handle Url Input Changes
   const handleChange = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
 
+  //Submit Request to be saved in local storage
   const handleSubmit = (e) => {
     if (!value.url) {
       toast.error("Link is required");
       return;
     } else if (value.url.includes(window.location.origin)) {
+      // Return Error if Origin URl is Supplied
       toast.error("invalid link");
       return;
     }
     try {
+      //Validates URL
       new URL(value.url);
       const res = generateLink(value.url);
       setrefetch(!refetch);
+
       if (res.success) {
         toast.success("successfully generated link");
         setValue({ url: "" });
@@ -48,10 +50,12 @@ function App() {
     setItems(JSON.parse(localStorage.getItem("urlData")));
   }, [refetch]);
 
+  //Copy URl to Clipboard
   const copyUrl = (url) => {
     navigator?.clipboard?.writeText(url);
   };
 
+  //Filter List of URL entries
   const onSearch = (e) => {
     const searchTerm = e.target.value;
     setSearchTerm(searchTerm);
@@ -67,8 +71,8 @@ function App() {
     }
   }, [searchTerm]);
 
+  //Delete URL in local storage
   const handleDelete = (id) => {
-    console.log(id);
     const isDelete = deleteLink(id);
     if (isDelete) setrefetch(!refetch);
     else {
@@ -76,14 +80,14 @@ function App() {
     }
   };
 
+  //Update original URL in local storage
   const handleEdit = () => {
     const isEdit = editLink(value);
     if (isEdit) {
-      setrefetch(!refetch);
       toast.success("Link updated successfully");
       setValue({ url: "" });
       setrefetch(!refetch);
-    } else  {
+    } else {
       toast.error("Link Already Exists");
     }
   };
@@ -110,64 +114,62 @@ function App() {
             </button>
           </div>
         </div>
-
-        {items?.length > 0 ? (
-          <div className="container">
+        <div>
+          {items?.length > 0 && (
             <input
-              // className={`border-2 w-full rounded-md h-[40px] px-4 mb-4 text-[12px]`}
               placeholder="Search URL"
               onChange={onSearch}
+              className="search"
             />
-            <div className="show-results">
-              {items?.map((item, index) => (
-                <div
-                  className={`single-result ${index > 0 ? "top-border" : ""}`}
-                  key={index}
-                >
-                  <div className="result-image">
-                    <img src={linkIcon} alt="icon" />
-                  </div>
-                  <div className="link">
-                    {/* <div>Zone Switch - Add Company Header Text</div> */}
-                    <a
-                      href={item.shortUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {item.shortUrl}
-                    </a>
-                    <div className="originalUrl">{`Site URL: ${item.originalUrl}`}</div>
-                  </div>
-                  <div>
-                    <div
-                      className="copy"
-                      onClick={() => copyUrl(item.shortUrl)}
-                    >
-                      <img src={copy} alt="icon" />
-                      <span>Copy Link</span>
+          )}
+          <div className="container">
+            {items?.length > 0 ? (
+              <div className="show-results">
+                {items?.map((item, index) => (
+                  <div
+                    className={`single-result ${index > 0 ? "top-border" : ""}`}
+                    key={index}
+                  >
+                    <div className="result-image">
+                      <img src={linkIcon} alt="icon" />
                     </div>
-                    <div className="link-actions">
+                    <div className="link">
+                      <a href={item.shortUrl} target="_blank" rel="noreferrer">
+                        {item.shortUrl}
+                      </a>
+                      <div className="originalUrl">{`Site URL: ${item.originalUrl}`}</div>
+                    </div>
+                    <div>
                       <div
-                        className="delelte-btn"
-                        onClick={() =>
-                          setValue({ id: item.id, url: item.originalUrl })
-                        }
+                        className="copy"
+                        onClick={() => copyUrl(item.shortUrl)}
                       >
-                        <img src={editIcon} alt="edit-icon" />
+                        <img src={copy} alt="icon" />
+                        <span>Copy Link</span>
                       </div>
-                      <div
-                        className="delelte-btn"
-                        onClick={() => handleDelete(item.id)}
-                      >
-                        <img src={deleteIcon} alt="delete-icon" />
+                      <div className="link-actions">
+                        <div
+                          className="delelte-btn"
+                          onClick={() =>
+                            setValue({ id: item.id, url: item.originalUrl })
+                          }
+                        >
+                          <img src={editIcon} alt="edit-icon" />
+                        </div>
+                        <div
+                          className="delelte-btn"
+                          onClick={() => handleDelete(item.id)}
+                        >
+                          <img src={deleteIcon} alt="delete-icon" />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : null}
           </div>
-        ) : null}
+        </div>
       </div>
     </div>
   );
