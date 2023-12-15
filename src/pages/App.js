@@ -28,10 +28,17 @@ function App() {
       return;
     }
     try {
-      const err = new URL(value.url);
+      new URL(value.url);
       const res = generateLink(value.url);
       setrefetch(!refetch);
+      if(res.success){
+        toast.success("successfully generated link")
+        setValue({url: ""})
+      } else {
+        toast.error("Link already exists")
+      }
     } catch (e) {
+      console.log(e)
       toast.error("invalid link");
     }
   };

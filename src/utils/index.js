@@ -1,3 +1,5 @@
+import { useRouteLoaderData } from "react-router-dom";
+
 export const generateRandomString = () =>
   Math.random().toString(36).slice(2, 7);
 
@@ -9,6 +11,12 @@ export const generateLink = (originalUrl) => {
   // console.log(data, "data")
   if (data) {
     data = JSON.parse(data);
+    const getLink = data.find((url) => url.originalUrl === originalUrl);
+    if (getLink) {
+      return {
+        success: false,
+      };
+    }
     data.push({
       id: data?.length + 1,
       originalUrl,
@@ -28,7 +36,7 @@ export const generateLink = (originalUrl) => {
     window.localStorage.setItem("urlData", JSON.stringify(data));
   }
 
-  return data;
+  return { success: true, data };
 };
 
 export const deleteLink = (id) => {
