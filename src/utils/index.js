@@ -8,7 +8,7 @@ export const generateLink = (originalUrl) => {
 
   // console.log(data, "data")
   if (data) {
-    data = JSON.parse(data)
+    data = JSON.parse(data);
     data.push({
       id: data?.length + 1,
       originalUrl,
@@ -30,3 +30,13 @@ export const generateLink = (originalUrl) => {
 
   return data;
 };
+
+// export const urlRegex = new RegExp(
+//   "^(https?:\\/\\/)?" + // protocol
+//     "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+//     "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR IP (v4) address
+//     "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+//     "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+//     "(\\#[-a-z\\d_]*)?$", // fragment locator
+//   "i"
+// );

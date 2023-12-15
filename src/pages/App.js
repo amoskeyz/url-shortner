@@ -3,7 +3,8 @@ import Icon from "../assets/images/icon.svg";
 import linkIcon from "../assets/images/linkIcon.svg";
 import copy from "../assets/images/copy.svg";
 import { generateLink } from "../utils";
-import InsertLinkIcon from '@mui/icons-material/InsertLink';
+import InsertLinkIcon from "@mui/icons-material/InsertLink";
+import toast from "react-hot-toast";
 
 function App() {
   const [value, setValue] = useState({ url: "" });
@@ -17,8 +18,20 @@ function App() {
   };
 
   const handleSubmit = (e) => {
-    const res = generateLink(value.url);
-    setrefetch(!refetch);
+    if (!value.url) {
+      toast.error("Link is required");
+      return;
+    } else if (value.url.includes(window.location.origin)) {
+      toast.error("invalid link");
+      return;
+    }
+    try {
+      const err = new URL(value.url);
+      const res = generateLink(value.url);
+      setrefetch(!refetch);
+    } catch (e) {
+      toast.error("invalid link");
+    }
   };
 
   useEffect(() => {
@@ -63,15 +76,13 @@ function App() {
           </div>
         </div>
 
-      
-       
         {items?.length > 0 ? (
           <div className="container">
-           <input
-          // className={`border-2 w-full rounded-md h-[40px] px-4 mb-4 text-[12px]`}
-          placeholder="Search URL"
-          onChange={onSearch}
-        />
+            <input
+              // className={`border-2 w-full rounded-md h-[40px] px-4 mb-4 text-[12px]`}
+              placeholder="Search URL"
+              onChange={onSearch}
+            />
             <div className="show-results">
               {items?.map((item, index) => (
                 <div
