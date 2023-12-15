@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Blinker:wght@200;300;400;600;700;800;900&family=Lato:ital,wght@0,400;0,700;1,400&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;1,300&display=swap');
+
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  font-family: 'Rubik', sans-serif;
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+    sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -19,6 +23,7 @@ code {
   height: 100vh;
   width: 100%;
   background: linear-gradient(0deg, #84bbdb 0%, #84bbdb 100%);
+  overflow: hidden;
 }
 
 .input_container {
@@ -73,13 +78,14 @@ input {
 }
 
 .show-results {
-  height: 339px;
+  min-height: 173px;
   flex-shrink: 0;
   border-radius: 5px;
   border: 1px solid #e7e9f1;
   background: #fff;
   box-shadow: 0px 32px 64px -12px rgba(7, 27, 123, 0.66);
-  padding: 20px;
+  padding: 10px 40px;
+  /* overflow: scroll; */
 }
 
 .single-result {
@@ -104,16 +110,35 @@ input {
   border: 1px solid #f2f2f2;
   background: #f2f2f2;
   display: flex;
-  padding: 20px;
+  padding: 10px;
   justify-content: center;
   align-items: center;
   gap: 19px;
   color: #2f80ed;
-  font-size: 20px;
+  /* font-size: 20px; */
 }
 
 .link {
   font-size: 20px;
   line-height: normal;
   color: #4f4f4f;
+}
+
+.container {
+  height: 50vh;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* box-shadow: 0 0 1px rgba(255, 255, 255, .5); */
+}
+
+.top-border {
+  border-top: 1px solid #bdbdbd;
 }
