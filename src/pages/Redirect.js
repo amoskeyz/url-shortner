@@ -9,7 +9,7 @@ const Redirect = () => {
   useEffect(() => {
     setLoading(true);
     const code = location.pathname.replace("/", "");
-    const urlList = localStorage.getItem("urlData");
+    const urlList = window.localStorage.getItem("urlData");
 
     if (urlList) {
       const getOriginalLink = JSON.parse(urlList).find(
