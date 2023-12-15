@@ -3,12 +3,14 @@ import Icon from "../assets/images/icon.svg";
 import linkIcon from "../assets/images/linkIcon.svg";
 import copy from "../assets/images/copy.svg";
 import { generateLink } from "../utils";
+import InsertLinkIcon from '@mui/icons-material/InsertLink';
 
 function App() {
   const [value, setValue] = useState({ url: "" });
   const [loading, setLoading] = useState(false);
   const [refetch, setrefetch] = useState(false);
   const [items, setItems] = useState([]);
+  const [searchTerm, setSearchTerm] = useState();
 
   const handleChange = (e) => {
     setValue({ [e.target.name]: e.target.value });
@@ -27,13 +29,28 @@ function App() {
     navigator?.clipboard?.writeText(url);
   };
 
+  const onSearch = (e) => {
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+    const filteredItems = JSON.parse(
+      window.localStorage.getItem("urlData")
+    ).filter((item) => item?.originalUrl.includes(searchTerm.toLowerCase()));
+    setItems(filteredItems);
+  };
+
+  useEffect(() => {
+    if (searchTerm === "") {
+      setItems(JSON.parse(window.localStorage.getItem("urlData")));
+    }
+  }, [searchTerm]);
+
   return (
     <div className="main">
       <div>
         <p className="app-title">URL Shortner</p>
         <div className="input_container">
           <div className="input-wrap">
-            <img src={Icon} alt="icon" />
+            <InsertLinkIcon fontSize="large" />
             <input
               placeholder="https://pasteyoururl.com"
               value={value.url}
@@ -41,13 +58,20 @@ function App() {
               name="url"
             />
             <button className="shortn-btn" onClick={handleSubmit} type="button">
-              Shorten
+              Shorten URL
             </button>
           </div>
         </div>
 
+      
+       
         {items?.length > 0 ? (
           <div className="container">
+           <input
+          // className={`border-2 w-full rounded-md h-[40px] px-4 mb-4 text-[12px]`}
+          placeholder="Search URL"
+          onChange={onSearch}
+        />
             <div className="show-results">
               {items?.map((item, index) => (
                 <div

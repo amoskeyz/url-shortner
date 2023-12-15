@@ -47,15 +47,16 @@ input {
 }
 
 .shortn-btn {
-  width: 166px;
-  height: 60px;
+  width: 180px;
+  height: 55px;
   border-radius: 5px;
   background: #940e0e;
   box-shadow: 0px 32px 64px -12px rgba(16, 24, 40, 0.2);
   border: none;
   color: #fff;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 500;
+  cursor: pointer;
 }
 
 .input-wrap {
@@ -90,7 +91,7 @@ input {
 
 .single-result {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-;
   width: 100%;
   align-items: center;
   height: 153px;
