@@ -4,10 +4,8 @@ import { useLocation } from "react-router-dom";
 const Redirect = () => {
   const location = useLocation();
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
     const code = location.pathname.replace("/", "");
     const urlList = window.localStorage.getItem("urlData");
 
@@ -22,7 +20,17 @@ const Redirect = () => {
     } else setError(true);
   }, []);
 
-  return <div>{error ? <div>not found</div> : null}</div>;
+  return (
+    <div>
+      {error ? (
+        <div className="redirect">
+          <h3>URL Not Found. Please check URL short code and try again</h3>
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
+  );
 };
 
 export default Redirect;
