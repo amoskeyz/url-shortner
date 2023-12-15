@@ -53,6 +53,7 @@ function App() {
   //Copy URl to Clipboard
   const copyUrl = (url) => {
     navigator?.clipboard?.writeText(url);
+    toast.success("Copied");
   };
 
   //Filter List of URL entries
