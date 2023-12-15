@@ -112,6 +112,7 @@ input {
   align-items: center;
   gap: 19px;
   color: #2f80ed;
+  cursor: pointer;
   /* font-size: 20px; */
 }
 
