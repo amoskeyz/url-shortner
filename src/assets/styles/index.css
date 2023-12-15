@@ -75,7 +75,7 @@ input {
 }
 
 .show-results {
-  min-height: 173px;
+  min-height: 153px;
   flex-shrink: 0;
   border-radius: 5px;
   border: 1px solid #e7e9f1;
@@ -178,4 +178,8 @@ input {
   text-align: center;
   font-size: 20px;
   font-weight: bold;
+}
+
+.space-top {
+  margin-top: 20px;
 }

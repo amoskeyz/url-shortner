@@ -168,11 +168,12 @@ function App() {
                     </div>
                   </div>
                 ))}
-                {searchTerm?.length > 3 && items?.length === 0 ? (
-                  <p>Not Found</p>
-                ) : null}
               </div>
-            ) : null}
+            ) : (
+              <div className="show-results space-top">
+                <p className="not-found">No URL created Yet. </p>
+              </div>
+            )}
             {searchTerm && items?.length === 0 ? (
               <div className="show-results">
                 <p className="not-found">Not Found</p>
