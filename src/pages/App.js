@@ -2,21 +2,22 @@ import { useState, useEffect } from "react";
 import Icon from "../assets/images/icon.svg";
 import linkIcon from "../assets/images/linkIcon.svg";
 import copy from "../assets/images/copy.svg";
-import { generateLink, deleteLink } from "../utils";
+import { generateLink, deleteLink, editLink } from "../utils";
 import InsertLinkIcon from "@mui/icons-material/InsertLink";
 import toast from "react-hot-toast";
 import deleteIcon from "../assets/images/delete.svg";
+import editIcon from "../assets/images/edit.svg";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 function App() {
-  const [value, setValue] = useState({ url: "" });
+  const [value, setValue] = useState({ url: "", id: "" });
   const [loading, setLoading] = useState(false);
   const [refetch, setrefetch] = useState(false);
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState();
 
   const handleChange = (e) => {
-    setValue({ [e.target.name]: e.target.value });
+    setValue({ ...value, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
@@ -31,14 +32,14 @@ function App() {
       new URL(value.url);
       const res = generateLink(value.url);
       setrefetch(!refetch);
-      if(res.success){
-        toast.success("successfully generated link")
-        setValue({url: ""})
+      if (res.success) {
+        toast.success("successfully generated link");
+        setValue({ url: "" });
       } else {
-        toast.error("Link already exists")
+        toast.error("Link already exists");
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
       toast.error("invalid link");
     }
   };
@@ -67,11 +68,23 @@ function App() {
   }, [searchTerm]);
 
   const handleDelete = (id) => {
-    console.log(id)
+    console.log(id);
     const isDelete = deleteLink(id);
     if (isDelete) setrefetch(!refetch);
     else {
       toast.error("Link Not Found");
+    }
+  };
+
+  const handleEdit = () => {
+    const isEdit = editLink(value);
+    if (isEdit) {
+      setrefetch(!refetch);
+      toast.success("Link updated successfully");
+      setValue({ url: "" });
+      setrefetch(!refetch);
+    } else  {
+      toast.error("Link Already Exists");
     }
   };
 
@@ -88,8 +101,12 @@ function App() {
               onChange={handleChange}
               name="url"
             />
-            <button className="shortn-btn" onClick={handleSubmit} type="button">
-              Shorten URL
+            <button
+              className="shortn-btn"
+              onClick={value.id ? handleEdit : handleSubmit}
+              type="button"
+            >
+              {value.id ? "Edit URL" : "Shorten URL"}
             </button>
           </div>
         </div>
@@ -111,14 +128,15 @@ function App() {
                     <img src={linkIcon} alt="icon" />
                   </div>
                   <div className="link">
-                    <div>Zone Switch - Add Company Header Text</div>
+                    {/* <div>Zone Switch - Add Company Header Text</div> */}
                     <a
-                      href="https://mos.lv/zxskkwww"
+                      href={item.shortUrl}
                       target="_blank"
                       rel="noreferrer"
                     >
-                      https://mos.lv/zxskkwww
+                      {item.shortUrl}
                     </a>
+                    <div className="originalUrl">{`Site URL: ${item.originalUrl}`}</div>
                   </div>
                   <div>
                     <div
@@ -127,11 +145,22 @@ function App() {
                     >
                       <img src={copy} alt="icon" />
                       <span>Copy Link</span>
-                      <div></div>
                     </div>
-                    {/* <DeleteForeverIcon fontSize="large" color="red"/> */}
-                    <div className="delelte-btn" onClick={() => handleDelete(item.id)}>
-                      <img src={deleteIcon} alt="" />
+                    <div className="link-actions">
+                      <div
+                        className="delelte-btn"
+                        onClick={() =>
+                          setValue({ id: item.id, url: item.originalUrl })
+                        }
+                      >
+                        <img src={editIcon} alt="edit-icon" />
+                      </div>
+                      <div
+                        className="delelte-btn"
+                        onClick={() => handleDelete(item.id)}
+                      >
+                        <img src={deleteIcon} alt="delete-icon" />
+                      </div>
                     </div>
                   </div>
                 </div>

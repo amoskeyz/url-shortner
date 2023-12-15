@@ -55,3 +55,25 @@ export const deleteLink = (id) => {
     return false;
   }
 };
+
+export const editLink = ({ id, url }) => {
+  try {
+    let data = JSON.parse(localStorage.getItem("urlData"));
+
+    const getLink = data.find((item) => item.originalUrl === url);
+
+    console.log(getLink,);
+    if (getLink) {
+      return false
+    }
+    const getlink = data.findIndex((link) => link.id === id);
+    if (getlink > -1) {
+      data[getlink].originalUrl = url;
+      window.localStorage.setItem("urlData", JSON.stringify(data));
+      return true;
+    }
+    return false;
+  } catch (e) {
+    return false;
+  }
+};
