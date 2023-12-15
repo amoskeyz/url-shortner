@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import Icon from "../assets/images/icon.svg";
 import linkIcon from "../assets/images/linkIcon.svg";
 import copy from "../assets/images/copy.svg";
-import { generateLink } from "../utils";
+import { generateLink, deleteLink } from "../utils";
 import InsertLinkIcon from "@mui/icons-material/InsertLink";
 import toast from "react-hot-toast";
+import deleteIcon from "../assets/images/delete.svg";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 function App() {
   const [value, setValue] = useState({ url: "" });
@@ -57,6 +59,15 @@ function App() {
     }
   }, [searchTerm]);
 
+  const handleDelete = (id) => {
+    console.log(id)
+    const isDelete = deleteLink(id);
+    if (isDelete) setrefetch(!refetch);
+    else {
+      toast.error("Link Not Found");
+    }
+  };
+
   return (
     <div className="main">
       <div>
@@ -102,9 +113,19 @@ function App() {
                       https://mos.lv/zxskkwww
                     </a>
                   </div>
-                  <div className="copy" onClick={() => copyUrl(item.shortUrl)}>
-                    <img src={copy} alt="icon" />
-                    <span>Copy Link</span>
+                  <div>
+                    <div
+                      className="copy"
+                      onClick={() => copyUrl(item.shortUrl)}
+                    >
+                      <img src={copy} alt="icon" />
+                      <span>Copy Link</span>
+                      <div></div>
+                    </div>
+                    {/* <DeleteForeverIcon fontSize="large" color="red"/> */}
+                    <div className="delelte-btn" onClick={() => handleDelete(item.id)}>
+                      <img src={deleteIcon} alt="" />
+                    </div>
                   </div>
                 </div>
               ))}
