@@ -59,10 +59,12 @@ function App() {
   const onSearch = (e) => {
     const searchTerm = e.target.value;
     setSearchTerm(searchTerm);
-    const filteredItems = JSON.parse(
-      window.localStorage.getItem("urlData")
-    ).filter((item) => item?.originalUrl.includes(searchTerm.toLowerCase()));
-    setItems(filteredItems);
+    if (e.target.value.length > 2) {
+      const filteredItems = JSON.parse(
+        window.localStorage.getItem("urlData")
+      ).filter((item) => item?.originalUrl.includes(searchTerm.toLowerCase()));
+      setItems(filteredItems);
+    }
   };
 
   useEffect(() => {
@@ -115,7 +117,7 @@ function App() {
           </div>
         </div>
         <div>
-          {items?.length > 0 && (
+          {JSON.parse(window.localStorage.getItem("urlData")).length > 0 && (
             <input
               placeholder="Search URL"
               onChange={onSearch}
@@ -166,6 +168,14 @@ function App() {
                     </div>
                   </div>
                 ))}
+                {searchTerm?.length > 3 && items?.length === 0 ? (
+                  <p>Not Found</p>
+                ) : null}
+              </div>
+            ) : null}
+            {searchTerm && items?.length === 0 ? (
+              <div className="show-results">
+                <p className="not-found">Not Found</p>
               </div>
             ) : null}
           </div>
