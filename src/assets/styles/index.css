@@ -184,3 +184,15 @@ input {
 .space-top {
   margin-top: 20px;
 }
+
+@media screen and (max-width: 860px) {
+  .container {
+    margin: 1em 2em;
+  }
+  .input_container{
+    width: 100%;
+  }
+  main{
+    margin: 20px;
+  }
+}
