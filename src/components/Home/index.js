@@ -118,7 +118,7 @@ function App() {
           </div>
         </div>
         <div>
-          {JSON.parse(window.localStorage.getItem("urlData")).length > 0 && (
+          {JSON.parse(window.localStorage.getItem("urlData"))?.length > 0 && (
             <input
               placeholder="Search URL"
               onChange={onSearch}
