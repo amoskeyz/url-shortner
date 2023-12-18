@@ -19,6 +19,10 @@ code {
   height: 100vh;
   width: 100%;
   background: linear-gradient(0deg, #84bbdb 0%, #84bbdb 100%);
+  background: linear-gradient(0deg, rgba(132, 187, 219, 0.64) 0%, rgba(132, 187, 219, 0.64) 100%), url("../images/background.jpeg"), lightgray 50% / cover no-repeat, #333;
+  background:linear-gradient(0deg, rgba(132, 187, 219, 0.64) 0%, rgba(132, 187, 219, 0.64) 100%), url("../images/background.jpeg");
+  background-size: cover;
+  /* background-image: url("http://www.skrenta.com/images/stackoverflow.jpg"), -webkit-gradient(linear, left top, left bottom, from(red), to(yellow)); */
   /* overflow: hidden; */
 }
 
